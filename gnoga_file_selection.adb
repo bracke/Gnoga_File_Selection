@@ -62,6 +62,11 @@ package body Gnoga_File_Selection is
       begin -- Up_Clicked
          Current_Dir := To_Unbounded_String (Ada.Directories.Containing_Directory (To_String (Current_Dir) ) );
          Control.Signal_Changed;
+      exception -- Up_Clicked
+      when Ada.Directories.Use_Error =>
+         Gnoga.Log (Message => "Up_Clicked: Use_Error for " & To_String (Current_Dir) );
+      when others =>
+         Gnoga.Log (Message => "Up_Clicked: other exception");
       end Up_Clicked;
 
       procedure File_Selected (Object : in out Gnoga.Gui.Base.Base_Type'Class) is
